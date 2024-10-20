@@ -46,17 +46,8 @@ class LLMUtil:
 
     def process_language(self, language, user_prompt):
         logger.info(f"正在处理多语言:{language}, user_prompt:{user_prompt}")
-
-        # Define a mapping of common language codes to full names
-        language_map = {
-            'en': 'English',
-            'zh-CN': 'Simplified Chinese',
-            'zh-TW': 'Traditional Chinese'
-        }
-        language_new = language_map[language]
-
         # 如果language 包含 English字符，则直接返回
-        if 'english'.lower() in language_new.lower():
+        if 'english'.lower() in language.lower():
             result = user_prompt
         else:
             result = self.process_prompt(self.language_sys_prompt.replace("{language}", language), user_prompt)
