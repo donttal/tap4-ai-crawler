@@ -47,14 +47,21 @@ class LLMUtil:
     def process_language(self, language, user_prompt):
         logger.info(f"正在处理多语言:{language}, user_prompt:{user_prompt}")
         # 如果language 包含 English字符，则直接返回
-        if 'english'.lower() in language.lower():
+        language_map = {
+            'en': 'English',
+            'zh-CN': '简体中文',
+            'zh-TW': '繁体中文'
+        }
+        language_new = language_map[language]
+
+        if 'english'.lower() in language_new.lower():
             result = user_prompt
         else:
-            result = self.process_prompt(self.language_sys_prompt.replace("{language}", language), user_prompt)
+            result = self.process_prompt(self.language_sys_prompt.replace("{language}", language_new), user_prompt)
             if result and not user_prompt.startswith("#"):
                 # 如果原始输入没有包含###开头的markdown标记，则去掉markdown标记
                 result = result.replace("### ", "").replace("## ", "").replace("# ", "").replace("**", "")
-        logger.info(f"多语言:{language}, 处理结果:{result}")
+        logger.info(f"多语言:{language_new}, 处理结果:{result}")
         return result
 
     def process_prompt(self, sys_prompt, user_prompt):
