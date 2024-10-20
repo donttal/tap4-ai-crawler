@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS public.web_navigation_translations (
+  web_navigation_name TEXT,
+  locale VARCHAR(10),
+  title TEXT,
+  content TEXT,
+  detail TEXT,
+  PRIMARY KEY (web_navigation_name, locale),
+  FOREIGN KEY (web_navigation_name) REFERENCES public.web_navigation(name)
+);
